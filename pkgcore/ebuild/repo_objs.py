@@ -405,7 +405,7 @@ class RepoConfig(syncable.tree):
             logger.warning("repository at %r has unset profile-formats, "
                            "defaulting to pms")
             profile_formats = set(['pms'])
-        unknown = profile_formats.difference(['pms', 'portage-1', 'portage-2'])
+        unknown = profile_formats.difference(['pms', 'portage-1', 'portage-2', 'profile-bashrcs'])
         if unknown:
             logger.warning(
                 "repository at %r has an unsupported profile format(s): %s" %

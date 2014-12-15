@@ -551,7 +551,7 @@ class domain(pkgcore.config.domain.domain):
     def get_package_bashrcs(self, pkg):
         for source in self.profile.bashrcs:
             yield source
-        for restrict, source in self.bashrcs:
+        for restrict, source in chain(self.profile.pkg_bashrcs, self.bashrcs):
             if restrict.match(pkg):
                 yield source
         if not self.ebuild_hook_dir:

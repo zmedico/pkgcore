@@ -377,6 +377,15 @@ class ProfileNode(object):
             return local_source(path)
         return None
 
+    @load_property("package.bashrc")
+    def pkg_bashrc(self, data):
+        l = []
+        if self.repoconfig is not None and \
+                'profile-bashrcs' in self.repoconfig.profile_format:
+            for atom, filename in data:
+                l.append((parse_match(atom), local_source(pjoin(self.path, 'bashrc', filename))))
+        return tuple(l)
+
     @load_property('eapi', fallback=('0',))
     def eapi_obj(self, data):
         data = [x.strip() for x in data]
@@ -644,6 +653,10 @@ class ProfileStack(object):
     @klass.jit_attr
     def bashrcs(self):
         return tuple(x.bashrc for x in self.stack if x.bashrc is not None)
+
+    @klass.jit_attr
+    def pkg_bashrcs(self):
+        return tuple(chain.from_iterable(x.pkg_bashrc for x in self.stack))
 
     bashrc = klass.alias_attr("bashrcs")
     path = klass.alias_attr("node.path")
