@@ -317,3 +317,21 @@ eapi5 = EAPI.register("5",
     )),
     ebd_env_options=eapi4.ebd_env_options,
 )
+
+eapi6 = EAPI.register("6",
+    eapi5.phases,
+    eapi5.default_phases,
+    eapi5.metadata_keys,
+    eapi5.mandatory_keys,
+    eapi5.tracked_attributes | frozenset(["iuse_effective"]),
+    combine_dicts(eapi5.options, dict(
+        ebuild_phase_func=True,
+        econf_disable_silent_rules=True,
+        profile_iuse_injection=True,
+        profile_stable_use=True,
+        new_reads_stdin=True,
+        required_use_one_of=True,
+        sub_slotting=True,
+    )),
+    ebd_env_options=eapi5.ebd_env_options,
+)
